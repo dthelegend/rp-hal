@@ -61,6 +61,12 @@ pub trait PinId: pin_sealed::PinIdOps {
     fn as_dyn(&self) -> DynPinId;
 }
 
+// Type-level metadata for extracting compile time pin constants
+pub trait PinMetaInfo {
+    const MASK: u32;
+    const NUM: u8;
+}
+
 /// Value-level representation for the pin (bank + id).
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -98,6 +104,10 @@ macro_rules! pin_ids {
                             num: $id
                         }
                     }
+                }
+                impl PinMetaInfo for [<$prefix $name>] {
+                    pub const MASK : u32 = 0x1 << $id;
+                    pub const NUM : u8 = $id;
                 }
                 impl pin_sealed::TypeLevelPinId for [<$prefix $name>] {
                     type Bank = [<Bank $bank>];

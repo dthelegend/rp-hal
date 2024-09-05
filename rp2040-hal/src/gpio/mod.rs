@@ -54,7 +54,7 @@ mod pin_group;
 mod pull;
 
 pub use func::*;
-pub use pin::{DynBankId, DynPinId, PinId};
+pub use pin::{DynBankId, DynPinId, PinId, PinMetaInfo};
 pub use pin_group::PinGroup;
 pub use pull::*;
 
